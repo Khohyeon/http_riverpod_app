@@ -16,4 +16,19 @@ class PostController {
     List<Post> postDtoList = await PostRepository().findAll();
     ref.read(posthomePageProvider.notifier).init(postDtoList);
   }
+
+  Future<void> addPost(String title) async{
+    Post post = await PostRepository().save(title);
+    ref.read(posthomePageProvider.notifier).add(post);
+  }
+
+  Future<void> removePost(int id) async{
+    await PostRepository().deleteById(id);
+    ref.read(posthomePageProvider.notifier).remove(id);
+  }
+
+  Future<void> updatePost(Post post) async {
+    Post postPS = await PostRepository().updatgeById(post);
+    ref.read(posthomePageProvider.notifier).update(postPS);
+  }
 }
